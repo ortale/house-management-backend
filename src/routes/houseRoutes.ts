@@ -10,14 +10,14 @@ router.get('/houses', async (req, res) => {
 });
 
 router.post('/houses', async (req, res) => {
-    const { name, address } = req.body;
-    await houseService.addHouse({ name, certificates: [], payments: [] });
+    const { name, email } = req.body;
+    await houseService.addHouse({ name, email, certificates: [], payments: [] });
     res.status(201).send('House created');
 });
 
 router.put('/houses/:id', async (req, res) => {
-    const { name } = req.body;
-    await houseService.updateHouse({ id: parseInt(req.params.id), name, certificates: [], payments: [] });
+    const { name, email } = req.body;
+    await houseService.updateHouse({ id: parseInt(req.params.id), name, email, certificates: [], payments: [] });
     res.send('House updated');
 });
 
@@ -27,3 +27,5 @@ router.delete('/houses/:id', async (req, res) => {
 });
 
 export default router;
+
+// UPDATE `certificates` SET `emailSent`='1' WHERE 1

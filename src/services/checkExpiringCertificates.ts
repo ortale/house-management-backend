@@ -4,8 +4,14 @@ import { sendEmailNotification } from './emailService';  // Import the email ser
 
 async function checkExpiringCertificates() {
     const [rows] = await db.query<RowDataPacket[]>(`
-        SELECT * FROM certificates 
-        WHERE expireDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 MONTH)
+        SELECT 
+            c.id as id, 
+            c.name as certificateName, 
+            c.expireDate as expireDate, 
+            h.name as houseName,
+            h.email as email
+        FROM certificates c INNER JOIN houses h ON c.houseId = h.id
+        WHERE expireDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 MONTH) AND emailSent = 0
     `);
 
     if (rows.length > 0) {
@@ -13,10 +19,10 @@ async function checkExpiringCertificates() {
 
         // Send an email notification
         await sendEmailNotification(rows);
-
     } else {
         console.log('No certificates expiring within the next month.');
     }
 }
 
 export default checkExpiringCertificates;
+

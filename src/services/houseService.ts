@@ -13,6 +13,7 @@ export class HouseService {
             houses.push({
                 id: row.id,
                 name: row.name,
+                email: row.email,
                 certificates: certificates as Certificate[],
                 payments: payments as Payment[],
             });
@@ -22,7 +23,8 @@ export class HouseService {
     }
 
     async addHouse(house: Omit<House, 'id'>): Promise<void> {
-        const result = await db.query('INSERT INTO houses (name) VALUES (?)', [house.name]);
+        console.log('INSERT INTO houses (name) VALUES (?, ?)', [house.name, house.email]);
+        const result = await db.query('INSERT INTO houses (name, email) VALUES (?, ?)', [house.name, house.email]);
     }
 
     async updateHouse(house: House): Promise<void> {
@@ -33,3 +35,5 @@ export class HouseService {
         await db.query('DELETE FROM houses WHERE id = ?', [id]);
     }
 }
+
+// {"name":"120 New Place,"email":"info@realanthonyestate.co.uk"}

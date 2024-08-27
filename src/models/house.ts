@@ -15,6 +15,7 @@ export interface Payment {
 export interface House {
     id: number;
     name: string;
+    email: string;
     certificates: Certificate[];
     payments: Payment[];
 }
