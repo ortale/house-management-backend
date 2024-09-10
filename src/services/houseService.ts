@@ -25,7 +25,7 @@ export class HouseService {
 
     async addHouse(house: Omit<House, 'id'>): Promise<void> {
         console.log('INSERT INTO houses (name) VALUES (?, ?, ?)', [house.name, house.email, house.astExpDate]);
-        const result = await db.query('INSERT INTO houses (name, email) VALUES (?, ?, ?)', [house.name, house.email, house.astExpDate]);
+        const result = await db.query('INSERT INTO houses (name, email, astExpDate) VALUES (?, ?, ?)', [house.name, house.email, house.astExpDate]);
     }
 
     async updateHouse(house: House): Promise<void> {
