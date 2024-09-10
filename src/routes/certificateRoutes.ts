@@ -1,15 +1,11 @@
 import express from 'express';
 import { CertificateService } from '../services/certificateService';
-import { sendEmailNotification } from '../services/emailService';
 
 const router = express.Router();
 const certificateService = new CertificateService();
 
 router.get('/certificates', async (req, res) => {
     const certificates = await certificateService.getAllCertificates();
-
-    await sendEmailNotification(certificates);
-
     res.json(certificates);
 });
 
