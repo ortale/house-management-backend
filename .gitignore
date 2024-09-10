@@ -3,6 +3,8 @@
 /.pnp
 .pnp.js
 
+.env
+
 # Output of `npm pack`
 *.tgz
 
