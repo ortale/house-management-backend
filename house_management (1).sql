@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 27, 2024 at 02:53 PM
+-- Generation Time: Sep 10, 2024 at 04:40 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `house_management`
 --
+CREATE DATABASE IF NOT EXISTS `house_management` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `house_management`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `certificates`
 --
 
+DROP TABLE IF EXISTS `certificates`;
 CREATE TABLE `certificates` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -36,38 +39,20 @@ CREATE TABLE `certificates` (
   `emailSent` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `certificates`
---
-
-INSERT INTO `certificates` (`id`, `name`, `date`, `expireDate`, `houseId`, `emailSent`) VALUES
-(1, 'PAT', '2024-08-21', '2024-08-30', 5, 1),
-(2, 'EICR', '2024-08-22', '2024-08-30', 6, 1),
-(3, 'PAT', '2024-08-22', '2024-08-30', 6, 1),
-(4, 'FAIC', '2024-08-22', '2024-08-30', 7, 1);
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `houses`
 --
 
+DROP TABLE IF EXISTS `houses`;
 CREATE TABLE `houses` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  `astExpDate` date DEFAULT NULL,
+  `emailSent` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `houses`
---
-
-INSERT INTO `houses` (`id`, `name`, `email`) VALUES
-(4, 'Test', 'info@realanthonyestate.co.uk'),
-(5, '12 Marden', 'info@realanthonyestate.co.uk'),
-(6, '9 Hallam', 'info@realanthonyestate.co.uk'),
-(7, '12 Queen of Denmark', 'info@realanthonyestate.co.uk'),
-(8, '120 New Place', 'info@realanthonyestate.co.uk');
 
 -- --------------------------------------------------------
 
@@ -75,6 +60,7 @@ INSERT INTO `houses` (`id`, `name`, `email`) VALUES
 -- Table structure for table `payments`
 --
 
+DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `id` int(11) NOT NULL,
   `description` text NOT NULL,
@@ -115,13 +101,13 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `certificates`
 --
 ALTER TABLE `certificates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `payments`
