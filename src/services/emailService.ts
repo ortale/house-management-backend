@@ -26,13 +26,36 @@ export async function sendCertificateEmailNotification(certificates: any[]) {
     try {
         await transporter.sendMail({
             from: '"Certificate Alert" <info@realanthonyestate.co.uk>', // Sender address
-            to: 'ortale22@gmail.com', // List of recipients,
+            to: process.env.IONOS_EMAIL, // List of recipients,
             cc: certificates.map(cert => cert.email),
             subject: 'Certificates Expiring Soon', // Subject line
             text: `The following certificates are expiring soon:\n\n${emailText}`, // Plain text body
         });
 
         updateCertificatesSentEmail(certificates.map(cert => cert.id));
+    } catch(error) {
+        console.error('Error sending email:', error);
+    }
+
+    console.log('Notification email sent.');
+}
+
+// Function to send an email notification
+export async function sendDueInvoiceEmailNotification(payments: any[]) {
+    const emailText = payments.map(
+        payment => `House: ${payment.houseName}, Fee Amount: ${payment.feeAmount}, Due Date: ${moment(payment.dueDate).format('DD/MM/YYYY')}`
+    ).join('\n');
+
+    try {
+        await transporter.sendMail({
+            from: '"Due Invoices Alert" <info@realanthonyestate.co.uk>', // Sender address
+            to: process.env.IONOS_EMAIL, // List of recipients,
+            cc: payments.map(payment => payment.email),
+            subject: 'Due Invoices', // Subject line
+            text: `The following invoices have due date:\n\n${emailText}`, // Plain text body
+        });
+
+        updateDueInvoicesSentEmail(payments.map(payment => payment.id));
     } catch(error) {
         console.error('Error sending email:', error);
     }
@@ -49,13 +72,31 @@ export async function sendExpContractEmailNotification(contracts: any[]) {
     try {
         await transporter.sendMail({
             from: '"Expiring Contract Alert" <info@realanthonyestate.co.uk>', // Sender address
-            to: 'ortale22@gmail.com', // List of recipients,
+            to: process.env.IONOS_EMAIL, // List of recipients,
             cc: contracts.map(cert => cert.email),
             subject: 'Contracts Expiring Soon', // Subject line
             text: `The following AST contracts are expiring soon:\n\n${emailText}`, // Plain text body
         });
 
         updateContractsSentEmail(contracts.map(contract => contract.id));
+    } catch(error) {
+        console.error('Error sending email:', error);
+    }
+
+    console.log('Notification email sent.');
+}
+
+// Function to send an email notification
+export async function sendContactFromWebsite(contactForm: any) {
+    const { name, email, message } = contactForm;
+
+    try {
+        await transporter.sendMail({
+            from: `"Website - Contact" ${email}>`, // Sender address
+            to: process.env.IONOS_EMAIL, // List of recipients,
+            subject: `Contact from Mr(s) ${name}`, // Subject line
+            text: message, // Plain text body
+        });
     } catch(error) {
         console.error('Error sending email:', error);
     }
@@ -72,6 +113,18 @@ async function updateCertificatesSentEmail(id: any[]) {
         console.log(`Found ${rows.length} certificates expiring within the next month:`);
     } else {
         console.log('No certificates expiring within the next month.');
+    }
+}
+
+async function updateDueInvoicesSentEmail(id: any[]) {
+    const [rows] = await db.query<RowDataPacket[]>(`
+        UPDATE payments SET emailSent = 1 WHERE id IN (${id})
+    `);
+
+    if (rows.length > 0) {
+        console.log(`Found ${rows.length} payments due:`);
+    } else {
+        console.log('No payments due.');
     }
 }
 

@@ -5,14 +5,16 @@ const router = express.Router();
 const paymentService = new PaymentService();
 
 router.post('/payments', async (req, res) => {
-    const { houseId, description, paymentDate, dueDate } = req.body;
-    await paymentService.addPayment({ houseId, description, paymentDate, dueDate });
+    const { houseId, paymentDate, dueDate, rentAmount, feeAmount, status } = req.body;
+    await paymentService.addPayment({ houseId, paymentDate, dueDate, rentAmount, feeAmount, status });
     res.status(201).send('Payment created');
 });
 
 router.put('/payments/:id', async (req, res) => {
-    const { description, paymentDate, dueDate } = req.body;
-    await paymentService.updatePayment({ id: parseInt(req.params.id), houseId: 0, description, paymentDate, dueDate });
+    const { houseId, status, paymentDate, dueDate, rentAmount, feeAmount } = req.body;
+    await paymentService.updatePayment(
+        { id: parseInt(req.params.id), houseId, paymentDate, dueDate, status, rentAmount, feeAmount }
+    );
     res.send('Payment updated');
 });
 

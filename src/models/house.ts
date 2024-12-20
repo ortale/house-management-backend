@@ -7,7 +7,10 @@ export interface Certificate {
 
 export interface Payment {
     id: number;
-    description: string;
+    houseId: number;
+    rentAmount: number;
+    feeAmount: number;
+    status: string;
     paymentDate: Date;
     dueDate: Date;
 }

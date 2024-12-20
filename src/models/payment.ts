@@ -1,7 +1,9 @@
 export interface Payment {
     id: number;
     houseId: number;
-    description: string;
+    rentAmount: number;
+    feeAmount: number;
+    status: string;
     paymentDate: Date;
     dueDate: Date;
 }
