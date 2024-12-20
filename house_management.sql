@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 20, 2024 at 11:56 AM
+-- Generation Time: Dec 20, 2024 at 12:08 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `certificates`
 --
 
+DROP TABLE IF EXISTS `certificates`;
 CREATE TABLE `certificates` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -42,6 +43,7 @@ CREATE TABLE `certificates` (
 -- Table structure for table `houses`
 --
 
+DROP TABLE IF EXISTS `houses`;
 CREATE TABLE `houses` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -56,6 +58,7 @@ CREATE TABLE `houses` (
 -- Table structure for table `payments`
 --
 
+DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `id` int(11) NOT NULL,
   `status` text NOT NULL,
