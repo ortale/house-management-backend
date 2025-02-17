@@ -1,5 +1,6 @@
 
 import express from 'express';
+import { NextFunction, Request, Response, Router } from "express"
 import bodyParser from 'body-parser';
 import houseRoutes from './routes/houseRoutes';
 import certificateRoutes from './routes/certificateRoutes';
@@ -11,6 +12,13 @@ import checkExpiringContracts from './services/checkExpiringContracts';
 import checkDueInvoices from './services/checkDueInvoices';
 
 const app = express();
+
+app.use(async (request: Request, response: Response, next: NextFunction) => {
+    response.header("Access-Control-Allow-Origin", "*")
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
+    next()
+});
+
 app.use(bodyParser.json());
 
 app.use('/api', houseRoutes);
