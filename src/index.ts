@@ -10,14 +10,11 @@ import cron from 'node-cron';
 import checkExpiringCertificates from './services/checkExpiringCertificates';
 import checkExpiringContracts from './services/checkExpiringContracts';
 import checkDueInvoices from './services/checkDueInvoices';
+import cors from "cors";
 
 const app = express();
 
-app.use(async (request: Request, response: Response, next: NextFunction) => {
-    response.header("Access-Control-Allow-Origin", "*")
-    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
-    next()
-});
+app.use(cors());
 
 app.use(bodyParser.json());
 
