@@ -11,7 +11,7 @@ async function checkDueInvoices() {
             p.dueDate as dueDate,
             h.email as email
         FROM payments p INNER JOIN houses h ON p.houseId = h.id
-        WHERE status = 'DUE' AND p.emailSent = 0
+        WHERE status = 'Pending' AND p.dueDate = CURDATE() AND p.emailSent = 0
     `);
 
     if (rows.length > 0) {
