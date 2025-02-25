@@ -22,7 +22,7 @@ export interface House {
     rentAmount: number;
     feePercent: number;
     astExpDate: Date;
-    rentDate: Date;
+    rentDate: number;
     certificates: Certificate[];
     payments: Payment[];
 }
