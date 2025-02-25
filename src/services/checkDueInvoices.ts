@@ -13,7 +13,6 @@ async function checkDueInvoices() {
             h.email AS email
         FROM payments p 
         INNER JOIN houses h ON p.houseId = h.id
-        WHERE p.status = 'Pending' 
         AND DAY(h.rentDate) = DAY(CURDATE()) 
         AND p.emailSent = 0;
     `);
