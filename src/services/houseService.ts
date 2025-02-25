@@ -32,7 +32,7 @@ export class HouseService {
     }
 
     async updateHouse(house: House): Promise<void> {
-        await db.query('UPDATE houses SET name = ?, email = ?, rentAmount = ?, feePercent = ?, rentDate = ?, astExpDate = ? WHERE id = ?', [house.name, house.email, house.rentAmount, house.rentDate, house.astExpDate, house.id]);
+        await db.query('UPDATE houses SET name = ?, email = ?, rentAmount = ?, feePercent = ?, rentDate = ?, astExpDate = ? WHERE id = ?', [house.name, house.email, house.rentAmount, house.feePercent, house.rentDate, house.astExpDate, house.id]);
     }
 
     async deleteHouse(id: number): Promise<void> {
