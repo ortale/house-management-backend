@@ -8,6 +8,7 @@ async function checkDueInvoices() {
             h.id AS id, 
             h.name AS houseName,
             h.rentDate AS rentDate,
+            h.rentAmount AS rentAmount,
             h.email AS email
         FROM houses h
         WHERE h.rentDate = DAY(CURDATE()) 
