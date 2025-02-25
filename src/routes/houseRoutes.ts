@@ -10,14 +10,14 @@ router.get('/houses', async (req, res) => {
 });
 
 router.post('/houses', async (req, res) => {
-    const { name, email, astExpDate } = req.body;
-    await houseService.addHouse({ name, email, astExpDate, certificates: [], payments: [] });
+    const { name, email, rentAmount, astExpDate } = req.body;
+    await houseService.addHouse({ name, email, rentAmount, astExpDate, certificates: [], payments: [] });
     res.status(201).send('House created');
 });
 
 router.put('/houses/:id', async (req, res) => {
-    const { name, email, astExpDate } = req.body;
-    await houseService.updateHouse({ id: parseInt(req.params.id), name, email, astExpDate, certificates: [], payments: [] });
+    const { name, email, rentAmount, astExpDate } = req.body;
+    await houseService.updateHouse({ id: parseInt(req.params.id), name, email, rentAmount, astExpDate, certificates: [], payments: [] });
     res.send('House updated');
 });
 

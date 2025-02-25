@@ -19,6 +19,7 @@ export interface House {
     id: number;
     name: string;
     email: string;
+    rentAmount: number;
     astExpDate: Date;
     certificates: Certificate[];
     payments: Payment[];
