@@ -118,7 +118,7 @@ async function updateCertificatesSentEmail(id: any[]) {
 
 async function updateDueInvoicesSentEmail(id: any[]) {
     const [rows] = await db.query<RowDataPacket[]>(`
-        UPDATE payments SET emailSent = 1 WHERE id IN (${id})
+        UPDATE houses SET emailSent = 1 WHERE id IN (${id})
     `);
 
     if (rows.length > 0) {
