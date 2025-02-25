@@ -3,7 +3,7 @@ import { House, Certificate, Payment } from '../models/house';
 
 export class HouseService {
     async getAllHouses(): Promise<House[]> {
-        const [rows] = await db.query('SELECT id, name, email, rentAmount DATE_ADD(astExpDate, INTERVAL 1 DAY) AS astExpDate FROM houses');
+        const [rows] = await db.query('SELECT id, name, email, rentAmount, DATE_ADD(astExpDate, INTERVAL 1 DAY) AS astExpDate FROM houses');
         const houses: House[] = [];
 
         for (const row of rows as any[]) {
