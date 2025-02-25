@@ -9,9 +9,10 @@ async function checkDueInvoices() {
             h.name as houseName,
             p.feeAmount as feeAmount,
             p.dueDate as dueDate,
+            h.rentDate as rentDate,
             h.email as email
         FROM payments p INNER JOIN houses h ON p.houseId = h.id
-        WHERE status = 'Pending' AND p.dueDate = CURDATE() AND p.emailSent = 0
+        WHERE status = 'Pending' DAY(h.rentDate) = CURDATE() AND p.emailSent = 0
     `);
 
     if (rows.length > 0) {
