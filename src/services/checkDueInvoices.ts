@@ -5,16 +5,13 @@ import { sendDueInvoiceEmailNotification } from './emailService';  // Import the
 async function checkDueInvoices() {
     const [rows] = await db.query<RowDataPacket[]>(`
         SELECT 
-            p.id AS id, 
+            h.id AS id, 
             h.name AS houseName,
-            p.feeAmount AS feeAmount,
-            p.dueDate AS dueDate,
             h.rentDate AS rentDate,
             h.email AS email
-        FROM payments p 
-        INNER JOIN houses h ON p.houseId = h.id
-        AND DAY(h.rentDate) = DAY(CURDATE()) 
-        AND p.emailSent = 0;
+        FROM houses h
+        WHERE h.rentDate = DAY(CURDATE()) 
+        AND h.emailSent = 0;
     `);
 
     if (rows.length > 0) {
