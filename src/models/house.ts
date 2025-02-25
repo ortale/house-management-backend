@@ -20,7 +20,9 @@ export interface House {
     name: string;
     email: string;
     rentAmount: number;
+    feePercent: number;
     astExpDate: Date;
+    rentDate: Date;
     certificates: Certificate[];
     payments: Payment[];
 }
