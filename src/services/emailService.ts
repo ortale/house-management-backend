@@ -43,7 +43,7 @@ export async function sendCertificateEmailNotification(certificates: any[]) {
 // Function to send an email notification
 export async function sendDueInvoiceEmailNotification(payments: any[]) {
     const emailText = payments.map(
-        payment => `House: ${payment.houseName}, Fee Amount: ${payment.feeAmount}, Due Date: ${moment(payment.dueDate).format('DD/MM/YYYY')}`
+        payment => `House: ${payment.houseName}, Rent Amount: ${payment.rentAmount}, Due Date: ${moment(payment.dueDate).format('DD/MM/YYYY')}`
     ).join('\n');
 
     try {
