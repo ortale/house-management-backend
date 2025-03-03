@@ -51,21 +51,22 @@ export async function sendDueInvoiceEmailNotification(payments: any[]) {
         payment => `${payment.houseName}`
     );
 
-    try {
-        await transporter.sendMail({
-            from: '"Real Anthony Estate" <info@realanthonyestate.co.uk>', // Sender address
-            to: process.env.IONOS_EMAIL, // List of recipients,
-            cc: payments.map(payment => payment.email),
-            subject: `${subjectText} - Rent Reminder Alert`, // Subject line
-            text: `Dear Customer\n\nThis is a reminder that the rent for this property is due on today. Please keep me informed of any delays on receiving the balance so I can contact the tenants.\n\nKind Regards,`, // Plain text body
-        });
-
-        updateDueInvoicesSentEmail(payments.map(payment => payment.id));
-    } catch(error) {
-        console.error('Error sending email:', error);
-    }
-    console.log('Notification email sent.');
-
+    payments.forEach(async payment => {
+        try {
+            await transporter.sendMail({
+                from: '"Real Anthony Estate" <info@realanthonyestate.co.uk>', // Sender address
+                to: process.env.IONOS_EMAIL, // List of recipients,
+                cc: payment.email,
+                subject: `${subjectText} - Rent Reminder Alert`, // Subject line
+                text: `Dear Customer\n\nThis is a reminder that the rent for this property is due on today. Please keep me informed of any delays on receiving the balance so I can contact the tenants.\n\nKind Regards,`, // Plain text body
+            });
+    
+            updateDueInvoicesSentEmail(payments.map(payment => payment.id));
+        } catch(error) {
+            console.error('Error sending email:', error);
+        }
+        console.log('Notification email sent.');
+    });
 }
 
 // Function to send an email notification
