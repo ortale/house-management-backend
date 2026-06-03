@@ -58,8 +58,6 @@ export class UserService {
             ]
         );
 
-		console.log(`loggedUser: ${JSON.stringify(loggedUser)}`);
-
 		const updatedUser = await this.getByUsernameToUser(loggedUser.email ? loggedUser.email : "")
 
 		return updatedUser;
