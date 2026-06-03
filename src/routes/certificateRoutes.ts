@@ -1,27 +1,28 @@
 import express from 'express';
 import { CertificateService } from '../services/certificateService';
+import { Authorize } from '../config/jwt/security';
 
 const router = express.Router();
 const certificateService = new CertificateService();
 
-router.get('/certificates', async (req, res) => {
+router.get('/certificates', Authorize, async (req, res) => {
     const certificates = await certificateService.getAllCertificates();
     res.json(certificates);
 });
 
-router.post('/certificates', async (req, res) => {
+router.post('/certificates', Authorize, async (req, res) => {
     const { houseId, name, date, expireDate } = req.body;
     await certificateService.addCertificate({ houseId, name, date, expireDate });
     res.status(201).send('Certificate created');
 });
 
-router.put('/certificates/:id', async (req, res) => {
+router.put('/certificates/:id', Authorize, async (req, res) => {
     const { name, date, expireDate } = req.body;
     await certificateService.updateCertificate({ id: parseInt(req.params.id), houseId: 0, name, date, expireDate });
     res.send('Certificate updated');
 });
 
-router.delete('/certificates/:id', async (req, res) => {
+router.delete('/certificates/:id', Authorize, async (req, res) => {
     await certificateService.deleteCertificate(parseInt(req.params.id));
     res.send('Certificate deleted');
 });

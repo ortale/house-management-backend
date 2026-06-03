@@ -3,6 +3,7 @@ import express from 'express';
 import { NextFunction, Request, Response, Router } from "express"
 import bodyParser from 'body-parser';
 import houseRoutes from './routes/houseRoutes';
+import userRoutes from './routes/userRoutes';
 import certificateRoutes from './routes/certificateRoutes';
 import paymentRoutes from './routes/paymentRoutes';
 import websiteRoutes from './routes/websiteRoutes';
@@ -10,6 +11,7 @@ import cron from 'node-cron';
 import checkExpiringCertificates from './services/checkExpiringCertificates';
 import checkExpiringContracts from './services/checkExpiringContracts';
 import checkDueInvoices from './services/checkDueInvoices';
+import { PassportMiddleWare } from "./config/jwt/passport";
 
 const app = express();
 
@@ -22,7 +24,10 @@ app.use(async (request: Request, response: Response, next: NextFunction) => {
 
 app.use(bodyParser.json());
 
+PassportMiddleWare.addMiddleWare();
+
 app.use('/api', houseRoutes);
+app.use('/api', userRoutes);
 app.use('/api', certificateRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api', websiteRoutes);
